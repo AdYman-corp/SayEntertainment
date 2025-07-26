@@ -26,7 +26,6 @@ function App() {
         return (
           <>
             <Hero />
-            <FeaturedNews />
             <TrendingSection />
             <CategorySection />
             <NewsletterSection />
