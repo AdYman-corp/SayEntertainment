@@ -850,8 +850,695 @@ const Footer = ({ setCurrentPage }) => {
   );
 };
 
-// Additional page components remain the same but with enhanced styling...
-// (ArticlePage, CategoryPage, SubmitNewsPage, AboutPage, ContactPage)
+// Enhanced Article Page Component
+const ArticlePage = () => {
+  const article = mockNews[0];
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto">
+          <article className="bg-white rounded-2xl shadow-2xl overflow-hidden animate-fadeInUp">
+            <div className="relative overflow-hidden">
+              <img 
+                src={article.image} 
+                alt={article.title}
+                className="w-full h-96 object-cover transition-transform duration-700 hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="flex items-center space-x-4 mb-4">
+                  <span className="bg-gradient-to-r from-yellow-400 to-red-500 text-black px-4 py-2 rounded-full text-sm font-bold">
+                    {article.category}
+                  </span>
+                  <span className="text-white text-sm flex items-center space-x-2">
+                    <ClockIcon />
+                    <span>{article.date}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-8 lg:p-12">
+              <header className="mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 leading-tight">
+                  {article.title}
+                </h1>
+                <p className="text-xl text-gray-600 mb-6 leading-relaxed">{article.subtitle}</p>
+                
+                <div className="flex items-center justify-between mb-8 pb-8 border-b border-gray-200">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full flex items-center justify-center text-black font-bold text-lg">
+                      {article.author[0]}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">{article.author}</p>
+                      <p className="text-sm text-gray-500">Entertainment Editor</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-6 text-gray-500">
+                    <span className="flex items-center space-x-1">
+                      <EyeIcon />
+                      <span>{article.views}</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <ClockIcon />
+                      <span>{article.readTime}</span>
+                    </span>
+                  </div>
+                </div>
+              </header>
+              
+              <div className="prose prose-lg max-w-none mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Actor Ahmed Helmy revealed details about his new cinematic project that will bring him together with his wife, actress Mona Zaki, for the fifth time in their shared artistic history. This work comes as part of the romantic comedy series that has characterized the duo.
+                </p>
+                
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Helmy indicated in press statements that the film will have a light comedic character with a romantic touch, confirming that the story addresses a contemporary topic that touches on Egyptian society issues in an entertaining and intelligent way.
+                </p>
+                
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  Filming is scheduled to begin next month, and will star a selection of stars beloved by the Egyptian and Arab public. The project represents a new milestone in the artistic collaboration between the beloved couple.
+                </p>
+                
+                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                  This collaboration continues their successful partnership that began with their first film together, which achieved great success at the box office and with critics alike. Their unique chemistry on screen has made them one of Egypt's most beloved on-screen couples.
+                </p>
+              </div>
+              
+              <footer className="border-t border-gray-200 pt-8">
+                <h3 className="text-xl font-bold mb-4 flex items-center space-x-2">
+                  <ShareIcon />
+                  <span>Share This Article</span>
+                </h3>
+                <div className="flex flex-wrap gap-4">
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-full transition-all duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                    <span>📘</span>
+                    <span>Facebook</span>
+                  </button>
+                  <button className="bg-blue-400 text-white px-6 py-3 rounded-full transition-all duration-300 hover:bg-blue-500 hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                    <span>🐦</span>
+                    <span>Twitter</span>
+                  </button>
+                  <button className="bg-green-600 text-white px-6 py-3 rounded-full transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                    <span>📱</span>
+                    <span>WhatsApp</span>
+                  </button>
+                  <button className="bg-red-600 text-white px-6 py-3 rounded-full transition-all duration-300 hover:bg-red-700 hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                    <span>📧</span>
+                    <span>Email</span>
+                  </button>
+                </div>
+              </footer>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Category Page Component
+const CategoryPage = ({ category }) => {
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('latest');
+  const categoryNews = mockNews.filter(news => news.category === category);
+  
+  const filters = ['all', 'trending', 'featured', 'recent'];
+  const sortOptions = [
+    { value: 'latest', label: 'Latest' },
+    { value: 'popular', label: 'Most Popular' },
+    { value: 'trending', label: 'Trending' }
+  ];
+  
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="text-center mb-16 animate-fadeInUp">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-4">
+            {category} News
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Latest news and updates from the world of {category}
+          </p>
+        </div>
+        
+        {/* Filters and Sort */}
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-12 gap-6">
+          <div className="flex flex-wrap gap-3">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setSelectedFilter(filter)}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 ${
+                  selectedFilter === filter
+                    ? 'bg-gradient-to-r from-yellow-400 to-red-500 text-black'
+                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                {filter.charAt(0).toUpperCase() + filter.slice(1)}
+              </button>
+            ))}
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-600 font-medium">Sort by:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="form-select bg-white border border-gray-300 rounded-full px-4 py-2 text-gray-700 focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+            >
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categoryNews.map((news, index) => (
+            <article 
+              key={news.id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:-translate-y-2 group animate-fadeInUp"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="relative overflow-hidden">
+                <img 
+                  src={news.image} 
+                  alt={news.title}
+                  className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <button className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 hover:bg-white/30 transition-colors duration-300">
+                    <PlayIcon className="w-6 h-6 text-white" />
+                  </div>
+                </button>
+              </div>
+              
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-gradient-to-r from-yellow-400 to-red-500 text-black px-3 py-1 rounded-full text-sm font-bold">
+                    {news.category}
+                  </span>
+                  <span className="text-gray-500 text-sm flex items-center space-x-1">
+                    <ClockIcon />
+                    <span>{news.date}</span>
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-3 text-gray-800 transition-colors duration-300 group-hover:text-yellow-600 line-clamp-2">
+                  {news.title}
+                </h3>
+                
+                <p className="text-gray-600 mb-4 line-clamp-2">{news.subtitle}</p>
+                
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {news.tags.slice(0, 2).map((tag, i) => (
+                    <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4 text-gray-500 text-sm">
+                    <span>By {news.author}</span>
+                    <span className="flex items-center space-x-1">
+                      <EyeIcon />
+                      <span>{news.views}</span>
+                    </span>
+                  </div>
+                  <button className="text-yellow-600 hover:text-yellow-700 font-semibold transition-all duration-300 hover:scale-105">
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Submit News Page Component
+const SubmitNewsPage = () => {
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    content: '',
+    email: '',
+    name: '',
+    phone: '',
+    tags: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsSubmitted(true);
+    setFormData({ title: '', category: '', content: '', email: '', name: '', phone: '', tags: '' });
+    setIsSubmitting(false);
+    
+    setTimeout(() => setIsSubmitted(false), 5000);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20 flex items-center justify-center">
+        <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-lg mx-4 text-center animate-scaleIn">
+          <div className="text-6xl mb-6">✨</div>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">News Submitted Successfully!</h2>
+          <p className="text-gray-600 mb-8">Thank you for your contribution. Our editorial team will review your news and get back to you soon.</p>
+          <button
+            onClick={() => setIsSubmitted(false)}
+            className="bg-gradient-to-r from-yellow-400 to-red-500 text-black px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+          >
+            Submit Another News
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12 animate-fadeInUp">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+              Submit News
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Share the latest news from the world of Egyptian entertainment with our community
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-12 animate-fadeInUp animation-delay-300">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="form-group">
+                  <label className="form-label">Full Name *</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="form-input"
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Email Address *</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="form-input"
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="form-group">
+                  <label className="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    className="form-input"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Category *</label>
+                  <select
+                    value={formData.category}
+                    onChange={(e) => setFormData({...formData, category: e.target.value})}
+                    className="form-select"
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    <option value="TV">Television</option>
+                    <option value="Cinema">Cinema</option>
+                    <option value="Music">Music</option>
+                    <option value="Celebrities">Celebrities</option>
+                    <option value="Events">Events</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">News Title *</label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) => setFormData({...formData, title: e.target.value})}
+                  className="form-input"
+                  placeholder="Enter a compelling news headline"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">Tags</label>
+                <input
+                  type="text"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({...formData, tags: e.target.value})}
+                  className="form-input"
+                  placeholder="Enter tags separated by commas (e.g., Egyptian Cinema, Comedy, Romance)"
+                />
+              </div>
+              
+              <div className="form-group">
+                <label className="form-label">News Content *</label>
+                <textarea
+                  value={formData.content}
+                  onChange={(e) => setFormData({...formData, content: e.target.value})}
+                  rows="8"
+                  className="form-textarea"
+                  placeholder="Write your news story here. Include all relevant details, quotes, and context."
+                  required
+                />
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">Submission Guidelines</h3>
+                <ul className="text-sm text-gray-600 space-y-2">
+                  <li>• Ensure your news is accurate and verified</li>
+                  <li>• Include relevant sources and quotes when possible</li>
+                  <li>• Use clear, engaging language suitable for our audience</li>
+                  <li>• Our editorial team will review and may edit your submission</li>
+                  <li>• We'll contact you if we need additional information</li>
+                </ul>
+              </div>
+              
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-yellow-400 to-red-500 text-black py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center space-x-2">
+                    <div className="loading-spinner"></div>
+                    <span>Submitting News...</span>
+                  </span>
+                ) : (
+                  'Submit News'
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced About Page Component
+const AboutPage = () => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+              About SayEntertainment
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Your trusted source for Egyptian entertainment news and celebrity updates
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div className="animate-slideInLeft">
+              <img 
+                src="https://images.unsplash.com/photo-1564484911601-58effed8d577?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxFZ3lwdGlhbiUyMGVudGVydGFpbm1lbnR8ZW58MHx8fHB1cnBsZXwxNzUzNDkxMTQwfDA&ixlib=rb-4.1.0&q=85" 
+                alt="Egyptian Entertainment"
+                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
+              />
+            </div>
+            
+            <div className="animate-slideInRight">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                SayEntertainment is a proud extension of the Say.eg media group, dedicated to bringing you the most comprehensive coverage of Egyptian entertainment. From the bustling studios of Cairo to the glamorous red carpets of international film festivals, we're your window into the vibrant world of Egyptian arts and culture.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Our passionate team of entertainment journalists and industry insiders work around the clock to deliver breaking news, exclusive interviews, and in-depth analysis of the Egyptian entertainment landscape.
+              </p>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-12 mb-16 animate-fadeInUp">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-black">🎬</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Vision</h3>
+                <p className="text-gray-600">
+                  To be the leading digital platform for Egyptian entertainment news, connecting audiences with their favorite stars and stories.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-white">🎭</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Mission</h3>
+                <p className="text-gray-600">
+                  To provide accurate, timely, and engaging entertainment content that celebrates Egyptian culture and artistic excellence.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-white">⭐</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">Our Values</h3>
+                <p className="text-gray-600">
+                  Integrity, authenticity, and respect for the artists and creators who make Egyptian entertainment extraordinary.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-gradient-to-r from-yellow-400 to-red-500 rounded-2xl p-8 lg:p-12 text-center animate-fadeInUp">
+            <h2 className="text-3xl font-bold text-black mb-4">What We Cover</h2>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+              {categories.map((category) => (
+                <div key={category.name} className="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center">
+                  <div className="text-3xl mb-2">{category.icon}</div>
+                  <div className="font-semibold text-black">{category.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Contact Page Component
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsSubmitted(true);
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(false);
+    
+    setTimeout(() => setIsSubmitted(false), 5000);
+  };
+
+  const contactInfo = [
+    {
+      icon: <EmailIcon className="w-6 h-6" />,
+      title: "Email Address",
+      details: "info@sayentertainment.com",
+      link: "mailto:info@sayentertainment.com"
+    },
+    {
+      icon: <PhoneIcon className="w-6 h-6" />,
+      title: "Phone Number",
+      details: "+20 123 456 789",
+      link: "tel:+20123456789"
+    },
+    {
+      icon: <LocationIcon className="w-6 h-6" />,
+      title: "Office Location",
+      details: "Cairo, Egypt",
+      link: "https://maps.google.com"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-20">
+      <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+              Get In Touch
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Have a story tip, press release, or just want to say hello? We'd love to hear from you
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-12 animate-slideInLeft">
+              <h2 className="text-3xl font-bold text-gray-800 mb-8">Send Us a Message</h2>
+              
+              {isSubmitted ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-6">✉️</div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Message Sent Successfully!</h3>
+                  <p className="text-gray-600">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="form-group">
+                      <label className="form-label">Full Name *</label>
+                      <input
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="form-input"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="form-group">
+                      <label className="form-label">Email Address *</label>
+                      <input
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="form-input"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label className="form-label">Subject *</label>
+                    <input
+                      type="text"
+                      value={formData.subject}
+                      onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                      className="form-input"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label className="form-label">Message *</label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      rows="6"
+                      className="form-textarea"
+                      required
+                    />
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-yellow-400 to-red-500 text-black py-4 rounded-full font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center space-x-2">
+                        <div className="loading-spinner"></div>
+                        <span>Sending Message...</span>
+                      </span>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
+            
+            {/* Contact Information */}
+            <div className="animate-slideInRight">
+              <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-12 mb-8">
+                <h2 className="text-3xl font-bold text-gray-800 mb-8">Contact Information</h2>
+                
+                <div className="space-y-6">
+                  {contactInfo.map((item, index) => (
+                    <a
+                      key={index}
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-4 group hover:bg-gray-50 p-4 rounded-xl transition-all duration-300"
+                    >
+                      <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full flex items-center justify-center text-black transition-all duration-300 group-hover:scale-110">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-800 group-hover:text-yellow-600 transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-600">{item.details}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-yellow-400 to-red-500 rounded-2xl p-8 lg:p-12 text-center">
+                <h3 className="text-2xl font-bold text-black mb-4">Follow Us</h3>
+                <p className="text-black/80 mb-6">Stay connected with the latest entertainment news</p>
+                <div className="flex justify-center space-x-4">
+                  {['📘', '📷', '🐦', '📺', '🎵'].map((icon, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-black transition-all duration-300 hover:bg-white/30 hover:scale-110"
+                    >
+                      <span className="text-xl">{icon}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Export all components
 export default {
@@ -860,5 +1547,10 @@ export default {
   TrendingSection,
   CategorySection,
   NewsletterSection,
-  Footer
+  Footer,
+  ArticlePage,
+  CategoryPage,
+  SubmitNewsPage,
+  AboutPage,
+  ContactPage
 };
