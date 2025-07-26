@@ -6,7 +6,6 @@ import Components from './components';
 const { 
   Header, 
   Hero, 
-  FeaturedNews, 
   TrendingSection, 
   CategorySection, 
   NewsletterSection, 
